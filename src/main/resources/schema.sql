@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `jugador` (
 
 CREATE TABLE IF NOT EXISTS `apuesta` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `jugador` INT NOT NULL,
+    `jugador` INT,
     `numero1` TINYINT NOT NULL,
     `numero2` TINYINT NOT NULL,
     `numero3` TINYINT NOT NULL,

@@ -5,6 +5,89 @@
     <title>Lotería</title>
 </head>
 <body>
-<h1 th:text="${mensaje}">Texto por defecto</h1>
+<a href="http://localhost:8080/api/apuestas/list">Recarga</a>
+
+<h2>Crear Jugador</h2>
+<form th:action="@{/jugadores/crear}" method="post" th:object="${jugador}">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" th:field="*{nombre}" required />
+    <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+    <button type="submit">Guardar</button>
+</form>
+
+<h2>Crear apuesta</h2>
+<form th:action="@{/apuestas/crear}" method="post" th:object="${apuesta}">
+    <label for="numero1">numero1:</label>
+    <input type="text" id="numero1" th:field="*{numero1}" required />
+    <span th:if="${#fields.hasErrors('numero1')}" th:errors="*{numero1}"></span>
+    <label for="numero2">numero2:</label>
+    <input type="text" id="numero2" th:field="*{numero2}" required />
+    <span th:if="${#fields.hasErrors('numero2')}" th:errors="*{numero2}"></span>
+    <label for="numero3">numero3:</label>
+    <input type="text" id="numero3" th:field="*{numero3}" required />
+    <span th:if="${#fields.hasErrors('numero3')}" th:errors="*{numero3}"></span>
+    <label for="numero4">numero4:</label>
+    <input type="text" id="numero4" th:field="*{numero4}" required />
+    <span th:if="${#fields.hasErrors('numero4')}" th:errors="*{numero4}"></span>
+    <label for="numero5">numero5:</label>
+    <input type="text" id="numero5" th:field="*{numero5}" required />
+    <span th:if="${#fields.hasErrors('numero5')}" th:errors="*{numero5}"></span>
+    <label for="numero6">numero6:</label>
+    <input type="text" id="numero6" th:field="*{numero6}" required />
+    <span th:if="${#fields.hasErrors('numero6')}" th:errors="*{numero6}"></span>
+
+    <button type="submit">Guardar</button>
+</form>
+
+<h2>Lista de Apuestas</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Número 1</th>
+        <th>Número 2</th>
+        <th>Número 3</th>
+        <th>Número 4</th>
+        <th>Número 5</th>
+        <th>Número 6</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="apuesta : ${apuestas}">
+        <td th:text="${apuesta.id}"></td>
+        <td th:text="${apuesta.numero1}"></td>
+        <td th:text="${apuesta.numero2}"></td>
+        <td th:text="${apuesta.numero3}"></td>
+        <td th:text="${apuesta.numero4}"></td>
+        <td th:text="${apuesta.numero5}"></td>
+        <td th:text="${apuesta.numero6}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Lista de Jugadores</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterar sobre la lista de jugadores -->
+    <tr th:each="jugador : ${jugadores}">
+        <td th:text="${jugador.id}"></td>
+        <td th:text="${jugador.nombre}"></td>
+        <td>
+            <!-- Puedes agregar botones o enlaces para editar o eliminar jugadores -->
+            <a th:href="@{/jugadores/editar/{id}(id=${jugador.id})}">Editar</a>
+            <a th:href="@{/jugadores/eliminar/{id}(id=${jugador.id})}">Eliminar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>

@@ -36,9 +36,10 @@ public class JugadorController {
     }
 
     // Crear un nuevo jugador
-    @PostMapping
+    @PostMapping("/crear")
     @ResponseStatus(HttpStatus.CREATED)
-    public Jugador createJugador(@RequestBody Jugador jugador) {
-        return jugadorService.saveJugador(jugador);
+    public String createJugador(@ModelAttribute("jugador") Jugador jugador) {
+        jugadorService.saveJugador(jugador);
+        return "index";
     }
 }

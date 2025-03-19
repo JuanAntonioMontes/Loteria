@@ -49,6 +49,13 @@ public class ApuestaService {
                     a.getNumero4().equals(apuesta.getNumero4()) &&
                     a.getNumero5().equals(apuesta.getNumero5()) &&
                     a.getNumero6().equals(apuesta.getNumero6())) {
+                logger.error("Ya existe una apuesta con los números: " +
+                        apuesta.getNumero1() + ", " +
+                        apuesta.getNumero2() + ", " +
+                        apuesta.getNumero3() + ", " +
+                        apuesta.getNumero4() + ", " +
+                        apuesta.getNumero5() + ", " +
+                        apuesta.getNumero6());
                 throw new RuntimeException("Ya existe una apuesta con esos números");
             }
         }

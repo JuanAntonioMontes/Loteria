@@ -1,7 +1,6 @@
-package com.ejercicio.loteria;
+package com.ejercicio.loteria.Entity;
 
 import jakarta.persistence.*;
-import jakarta.websocket.ClientEndpoint;
 
 @Entity
 @Table(name = "apuestas")

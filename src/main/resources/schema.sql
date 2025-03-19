@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS `plato` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `nombre` VARCHAR(255) NOT NULL,
+    `precio` NUMERIC(6,2) NOT NULL,
+    `categoria` INT NOT NULL);

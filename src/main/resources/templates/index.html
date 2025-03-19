@@ -15,6 +15,17 @@
     <button type="submit">Guardar</button>
 </form>
 
+<h2>Crear apuesta Ramdom</h2>
+<form th:action="@{/api/apuestas/random}" method="post" th:object="${apuesta}">
+    <label for="jugador">Jugador:</label>
+    <select th:field="*{jugador}" id="jugador">
+        <option th:each="jugador : ${jugadores}"
+                th:value="${jugador.id}"
+                th:text="${jugador.nombre}">Jugador</option>
+    </select>
+    <button type="submit">Guardar</button>
+</form>
+
 <h2>Crear apuesta</h2>
 <form th:action="@{/api/apuestas/crear}" method="post" th:object="${apuesta}">
     <label for="jugador">Jugador:</label>

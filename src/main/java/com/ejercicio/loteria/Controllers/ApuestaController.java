@@ -54,8 +54,15 @@ public class ApuestaController {
         return ResponseEntity.ok(apuestaService.createApuesta(apuesta, userId));
     }
 
-    @PostMapping("/random/{userId}")
-    public ResponseEntity<Apuesta> crearApuestaRandom(@PathVariable Integer userId) {
-        return ResponseEntity.ok(apuestaService.createApuestaRandom(userId));
+    @PostMapping("/random")
+    public String crearApuestaRandom(@ModelAttribute("apuesta") ApuestaDTO apuesta, @ModelAttribute("jugador") Jugador jugador, Model model) {
+        apuestaService.createApuestaRandom(jugador.getId());
+        List<Apuesta> apuestas = apuestaService.getApuestas();
+        List<Jugador> jugadores = jugadorService.getAllJugadores();
+        model.addAttribute("jugador", new Jugador());
+        model.addAttribute("apuesta", new Apuesta());
+        model.addAttribute("apuestas", apuestas);
+        model.addAttribute("jugadores", jugadores);
+        return "index";
     }
 }

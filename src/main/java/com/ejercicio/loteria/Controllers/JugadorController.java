@@ -1,19 +1,25 @@
 package com.ejercicio.loteria.Controllers;
 
+import com.ejercicio.loteria.Services.ApuestaService;
 import com.ejercicio.loteria.Services.JugadorService;
+import com.ejercicio.loteria.entities.Apuesta;
 import com.ejercicio.loteria.entities.Jugador;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/jugadores")
 public class JugadorController {
 
     private final JugadorService jugadorService;
+    private ApuestaService apuestaService;
 
-    public JugadorController(JugadorService jugadorService) {
+    public JugadorController(JugadorService jugadorService, ApuestaService apuestaService) {
+        this.apuestaService = apuestaService;
         this.jugadorService = jugadorService;
     }
 
@@ -36,9 +42,17 @@ public class JugadorController {
     }
 
     // Crear un nuevo jugador
-    @PostMapping
+    @PostMapping("/crear")
     @ResponseStatus(HttpStatus.CREATED)
-    public Jugador createJugador(@RequestBody Jugador jugador) {
-        return jugadorService.saveJugador(jugador);
+    public String createJugador(@ModelAttribute("jugador") Jugador jugador, Model model) {
+        jugadorService.saveJugador(jugador);
+        List<Apuesta> apuestas = apuestaService.getApuestas();
+        List<Jugador> jugadores = jugadorService.getAllJugadores();
+        model.addAttribute("jugador", new Jugador());
+        model.addAttribute("apuesta", new Apuesta());
+        model.addAttribute("apuestaR", new Apuesta());
+        model.addAttribute("apuestas", apuestas);
+        model.addAttribute("jugadores", jugadores);
+        return "index";
     }
 }

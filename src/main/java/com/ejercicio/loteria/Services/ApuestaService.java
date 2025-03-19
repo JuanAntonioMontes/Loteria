@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import java.util.List;
+
 @Service
 public class ApuestaService {
 
@@ -59,22 +61,36 @@ public class ApuestaService {
         return apuestaRepository.save(apuesta);
     }
 
+    public List<Apuesta> getApuestas() {
+        return apuestaRepository.findAll();
+    }
+
     public Apuesta createApuestaRandom(Integer jugadorId) {
         Set<Integer> numeros = new HashSet<>();
         Random random = new Random();
         Jugador jugador = jugadorRepository.findById(jugadorId).orElseThrow();
-
+        List<Apuesta> apuestaLista = apuestaRepository.findAllByJugadorId(jugadorId);
         while (numeros.size() < 6) {
             numeros.add(random.nextInt(49) + 1); // Genera un número entre 1 y 49
         }
-
         Integer[] numerosArray = numeros.toArray(new Integer[0]);
-
-        return new Apuesta(
+        Apuesta apuesta = new Apuesta(
                 numerosArray[0], numerosArray[1], numerosArray[2],
                 numerosArray[3], numerosArray[4], numerosArray[5],
                 jugador
         );
+        for (Apuesta a:apuestaLista){
+            if (a.getNumero1().equals(apuesta.getNumero1()) &&
+                    a.getNumero2().equals(apuesta.getNumero2()) &&
+                    a.getNumero3().equals(apuesta.getNumero3()) &&
+                    a.getNumero4().equals(apuesta.getNumero4()) &&
+                    a.getNumero5().equals(apuesta.getNumero5()) &&
+                    a.getNumero6().equals(apuesta.getNumero6())) {
+                throw new RuntimeException("Ya existe una apuesta con esos números");
+            }
+        }
+
+        return apuestaRepository.save(apuesta);
     }
 
     private void validarNumerosApuesta(ApuestaDTO apuestadto) {

@@ -1,3 +1,7 @@
+CREATE TABLE IF NOT EXISTS `jugador` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `nombre` NUMERIC(2) NOT NULL,);
+
 CREATE TABLE IF NOT EXISTS `apuesta` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `jugador` INT NOT NULL,
@@ -9,6 +13,3 @@ CREATE TABLE IF NOT EXISTS `apuesta` (
     `numero6` NUMERIC(2) NOT NULL,
     FOREIGN KEY (jugador) REFERENCES jugador(id));
 
-CREATE TABLE IF NOT EXISTS `jugador` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `nombre` NUMERIC(2) NOT NULL,);

@@ -6,6 +6,8 @@ import com.ejercicio.loteria.entities.Apuesta;
 import com.ejercicio.loteria.Repositores.ApuestaRepository;
 import com.ejercicio.loteria.entities.Jugador;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,6 +22,8 @@ import java.util.List;
 @Service
 public class ApuestaService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ApuestaService.class);
+
     private final ApuestaRepository apuestaRepository;
 
     private final JugadorRepository jugadorRepository;
@@ -33,6 +37,7 @@ public class ApuestaService {
 
     @Transactional
     public Apuesta createApuesta(ApuestaDTO apuestadto, Integer jugadorId) {
+        logger.info("Llamada servicio a crear apuesta");
         validarNumerosApuesta(apuestadto);
         List<Apuesta> apuestaLista = apuestaRepository.findAllByJugadorId(jugadorId);
         Jugador jugador = jugadorRepository.findById(jugadorId).orElseThrow();
@@ -51,10 +56,12 @@ public class ApuestaService {
     }
 
     public List<Apuesta> getApuestas() {
+        logger.info("Llamada servicio a obtener todas las apuestas");
         return apuestaRepository.findAll();
     }
 
     public Apuesta createApuestaRandom(Integer jugadorId) {
+        logger.info("Llamada servicio a crear apuesta aleatoria");
         Set<Integer> numeros = new HashSet<>();
         Random random = new Random();
         Jugador jugador = jugadorRepository.findById(jugadorId).orElseThrow();
@@ -83,6 +90,7 @@ public class ApuestaService {
     }
 
     private void validarNumerosApuesta(ApuestaDTO apuestadto) {
+        logger.info("Llamada servicio a validar apuesta");
         int[] numeros = {apuestadto.numero1(), apuestadto.numero2(), apuestadto.numero3(),
                 apuestadto.numero4(), apuestadto.numero5(), apuestadto.numero6()};
 

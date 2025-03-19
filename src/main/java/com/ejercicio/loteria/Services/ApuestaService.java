@@ -6,6 +6,8 @@ import com.ejercicio.loteria.entities.Apuesta;
 import com.ejercicio.loteria.Repositores.ApuestaRepository;
 import com.ejercicio.loteria.entities.Jugador;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,6 +25,7 @@ public class ApuestaService {
     private final JugadorRepository jugadorRepository;
 
     Random random = new Random();
+    private static final Logger logger = LoggerFactory.getLogger(ApuestaService.class);
 
     public ApuestaService(ApuestaRepository apuestaRepository, JugadorRepository jugadorRepository) {
         this.apuestaRepository = apuestaRepository;
@@ -30,8 +33,8 @@ public class ApuestaService {
     }
 
     @Transactional
-
     public Apuesta createApuesta(ApuestaDTO apuestadto, Integer jugadorId) {
+        logger.info("Se ha intentado introducir un jugador ya existente");
         validarNumerosApuesta(apuestadto);
         List<Apuesta> apuestaLista = apuestaRepository.findAllByJugadorId(jugadorId);
         Jugador jugador = jugadorRepository.findById(jugadorId).orElseThrow();
@@ -43,6 +46,13 @@ public class ApuestaService {
                     a.getNumero4().equals(apuesta.getNumero4()) &&
                     a.getNumero5().equals(apuesta.getNumero5()) &&
                     a.getNumero6().equals(apuesta.getNumero6())) {
+                logger.error("Ya existe una apuesta con los números: " +
+                        apuesta.getNumero1() + ", " +
+                        apuesta.getNumero2() + ", " +
+                        apuesta.getNumero3() + ", " +
+                        apuesta.getNumero4() + ", " +
+                        apuesta.getNumero5() + ", " +
+                        apuesta.getNumero6());
                 throw new RuntimeException("Ya existe una apuesta con esos números");
             }
         }

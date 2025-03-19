@@ -10,7 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 @Service
 public class ApuestaService {
@@ -46,29 +49,22 @@ public class ApuestaService {
         return apuestaRepository.save(apuesta);
     }
 
-    public Apuesta createApuestaRandom(ApuestaDTO apuestadto, Integer jugadorId) {
-        validarNumerosApuesta(apuestadto);
-        List<Apuesta> apuestaLista = apuestaRepository.findAll();
+    public Apuesta createApuestaRandom(Integer jugadorId) {
+        Set<Integer> numeros = new HashSet<>();
+        Random random = new Random();
         Jugador jugador = jugadorRepository.findById(jugadorId).orElseThrow();
-        Apuesta apuesta = new Apuesta(apuestadto.numero1(),
-                apuestadto.random.nexInt(49)+1,
-                apuestadto.random.nexInt(49)+1,
-                apuestadto.random.nexInt(49)+1,
-                apuestadto.random.nexInt(49)+1,
-                apuestadto.random.nexInt(49)+1,
-                jugador);
-        for (Apuesta a:apuestaLista){
-            if (a.getJugador().getId().equals(jugadorId) &&
-                    a.getNumero1().equals(apuesta.getNumero1()) &&
-                    a.getNumero2().equals(apuesta.getNumero2()) &&
-                    a.getNumero3().equals(apuesta.getNumero3()) &&
-                    a.getNumero4().equals(apuesta.getNumero4()) &&
-                    a.getNumero5().equals(apuesta.getNumero5()) &&
-                    a.getNumero6().equals(apuesta.getNumero6())) {
-                throw new RuntimeException("Ya existe una apuesta con esos números");
-            }
+
+        while (numeros.size() < 6) {
+            numeros.add(random.nextInt(49) + 1); // Genera un número entre 1 y 49
         }
-        return apuestaRepository.save(apuesta);
+
+        Integer[] numerosArray = numeros.toArray(new Integer[0]);
+
+        return new Apuesta(
+                numerosArray[0], numerosArray[1], numerosArray[2],
+                numerosArray[3], numerosArray[4], numerosArray[5],
+                jugador
+        );
     }
 
     private void validarNumerosApuesta(ApuestaDTO apuestadto) {

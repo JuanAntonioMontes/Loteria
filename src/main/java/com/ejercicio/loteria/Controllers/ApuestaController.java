@@ -22,4 +22,9 @@ public class ApuestaController {
     public ResponseEntity<Apuesta> crearApuesta(@RequestBody ApuestaDTO apuesta, @PathVariable Integer userId) {
         return ResponseEntity.ok(apuestaService.createApuesta(apuesta, userId));
     }
+
+    @PostMapping("/random/{userId}")
+    public ResponseEntity<Apuesta> crearApuestaRandom(@PathVariable Integer userId) {
+        return ResponseEntity.ok(apuestaService.createApuestaRandom(userId));
+    }
 }

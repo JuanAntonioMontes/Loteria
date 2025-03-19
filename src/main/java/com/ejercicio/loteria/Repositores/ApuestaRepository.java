@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -23,4 +24,7 @@ public interface ApuestaRepository extends JpaRepository<Apuesta, Integer> {
             @Param("num6") Integer numero6,
             @Param("jugadorId") Integer jugadorId
     );
+
+    @Query("SELECT a FROM Apuesta a WHERE a.jugador.id = :jugadorId")
+    List<Apuesta> findAllByJugadorId(@Param("jugadorId") Integer jugadorId);
 }

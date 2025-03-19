@@ -1,9 +1,15 @@
-/*INSERT INTO plato(nombre, precio, categoria) VALUES('Ensalada', 6.00, 1);
-INSERT INTO plato(nombre, precio, categoria) VALUES('Gazpacho', 7.00, 1);
-INSERT INTO plato(nombre, precio, categoria) VALUES('Alubias', 9.00, 1);
-INSERT INTO plato(nombre, precio, categoria) VALUES('Hamburguesa', 15.00, 2);
-INSERT INTO plato(nombre, precio, categoria) VALUES('Solomillo', 28.00, 2);
-INSERT INTO plato(nombre, precio, categoria) VALUES('Entrecot', 23.00, 2);
-INSERT INTO plato(nombre, precio, categoria) VALUES('Fruta', 6.00, 3);
-INSERT INTO plato(nombre, precio, categoria) VALUES('Flan', 8.00, 3);
-INSERT INTO plato(nombre, precio, categoria) VALUES('Arroz con leche', 8.00, 3);*/
+-- Insertar jugadores
+INSERT INTO jugador (nombre) VALUES ('Juan Pérez');
+INSERT INTO jugador (nombre) VALUES ('María López');
+
+-- Insertar apuestas para Juan Pérez (ID = 1)
+INSERT INTO apuesta (jugador, numero1, numero2, numero3, numero4, numero5, numero6)
+VALUES (1, 5, 12, 23, 34, 41, 49);
+INSERT INTO apuesta (jugador, numero1, numero2, numero3, numero4, numero5, numero6)
+VALUES (1, 3, 15, 27, 36, 44, 48);
+
+-- Insertar apuestas para María López (ID = 2)
+INSERT INTO apuesta (jugador, numero1, numero2, numero3, numero4, numero5, numero6)
+VALUES (2, 2, 9, 18, 25, 39, 45);
+INSERT INTO apuesta (jugador, numero1, numero2, numero3, numero4, numero5, numero6)
+VALUES (2, 7, 14, 20, 33, 37, 42);

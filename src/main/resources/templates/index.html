@@ -8,7 +8,7 @@
 <a href="http://localhost:8080/api/apuestas/list">Recarga</a>
 
 <h2>Crear Jugador</h2>
-<form th:action="@{/jugadores/crear}" method="post" th:object="${jugador}">
+<form th:action="@{/api/jugadores/crear}" method="post" th:object="${jugador}">
     <label for="nombre">Nombre:</label>
     <input type="text" id="nombre" th:field="*{nombre}" required />
     <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
@@ -16,7 +16,13 @@
 </form>
 
 <h2>Crear apuesta</h2>
-<form th:action="@{/apuestas/crear}" method="post" th:object="${apuesta}">
+<form th:action="@{/api/apuestas/crear}" method="post" th:object="${apuesta}">
+    <label for="jugador">Jugador:</label>
+    <select th:field="*{jugador}" id="jugador">
+        <option th:each="jugador : ${jugadores}"
+                th:value="${jugador.id}"
+                th:text="${jugador.nombre}">Jugador</option>
+    </select>
     <label for="numero1">numero1:</label>
     <input type="text" id="numero1" th:field="*{numero1}" required />
     <span th:if="${#fields.hasErrors('numero1')}" th:errors="*{numero1}"></span>
@@ -72,7 +78,6 @@
     <tr>
         <th>ID</th>
         <th>Nombre</th>
-        <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
@@ -80,11 +85,6 @@
     <tr th:each="jugador : ${jugadores}">
         <td th:text="${jugador.id}"></td>
         <td th:text="${jugador.nombre}"></td>
-        <td>
-            <!-- Puedes agregar botones o enlaces para editar o eliminar jugadores -->
-            <a th:href="@{/jugadores/editar/{id}(id=${jugador.id})}">Editar</a>
-            <a th:href="@{/jugadores/eliminar/{id}(id=${jugador.id})}">Eliminar</a>
-        </td>
     </tr>
     </tbody>
 </table>

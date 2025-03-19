@@ -21,13 +21,20 @@ public class ApuestaController {
 
     private JugadorService jugadorService;
 
-    public ApuestaController(ApuestaService apuestaService){
+    public ApuestaController(ApuestaService apuestaService, JugadorService jugadorService){
         this.apuestaService = apuestaService;
+        this.jugadorService = jugadorService;
     }
 
     @PostMapping("/crear")
-    public String crearApuesta(@ModelAttribute("apuesta") ApuestaDTO apuesta, @ModelAttribute("jugador") Jugador jugador) {
+    public String crearApuesta(@ModelAttribute("apuesta") ApuestaDTO apuesta, @ModelAttribute("jugador") Jugador jugador, Model model) {
         apuestaService.createApuesta(apuesta, jugador.getId());
+        List<Apuesta> apuestas = apuestaService.getApuestas();
+        List<Jugador> jugadores = jugadorService.getAllJugadores();
+        model.addAttribute("jugador", new Jugador());
+        model.addAttribute("apuesta", new Apuesta());
+        model.addAttribute("apuestas", apuestas);
+        model.addAttribute("jugadores", jugadores);
         return "index";
     }
 
@@ -35,8 +42,6 @@ public class ApuestaController {
     public String getApuestas(Model model) {
         List<Apuesta> apuestas = apuestaService.getApuestas();
         List<Jugador> jugadores = jugadorService.getAllJugadores();
-        Apuesta apuesta = new Apuesta();
-        apuestas.add(apuesta);
         model.addAttribute("jugador", new Jugador());
         model.addAttribute("apuesta", new Apuesta());
         model.addAttribute("apuestas", apuestas);

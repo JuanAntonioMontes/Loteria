@@ -1,16 +1,15 @@
-package com.ejercicio.loteria;
+package com.ejercicio.loteria.entities;
 
 import jakarta.persistence.*;
-import jakarta.websocket.ClientEndpoint;
 
 @Entity
-@Table(name = "apuestas")
+@Table(name = "apuesta")
 public class Apuesta{
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "numero1")
     private Integer numero1;
@@ -30,16 +29,24 @@ public class Apuesta{
     @Column(name = "numero6")
     private Integer numero6;
 
-    public Apuesta(Integer numero1, Integer numero2, Integer numero6, Integer numero5, Integer numero4, Integer numero3) {
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "jugador", nullable = false)
+    private Jugador jugador;
+
+    public Apuesta() {
+    }
+
+    public Apuesta(Integer numero1, Integer numero2, Integer numero6, Integer numero5, Integer numero4, Integer numero3, Jugador jugador) {
         this.numero1 = numero1;
         this.numero2 = numero2;
         this.numero6 = numero6;
         this.numero5 = numero5;
         this.numero4 = numero4;
         this.numero3 = numero3;
+        this.jugador = jugador;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

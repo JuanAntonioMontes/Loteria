@@ -2,6 +2,7 @@ package com.ejercicio.loteria.Services;
 
 import com.ejercicio.loteria.Repositores.JugadorRepository;
 import com.ejercicio.loteria.entities.Jugador;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -35,6 +36,7 @@ public class JugadorService {
     }
 
     // Guardar o actualizar un jugador
+    @Transactional
     public Jugador saveJugador(Jugador jugador) {
         return jugadorRepository.save(jugador);
     }

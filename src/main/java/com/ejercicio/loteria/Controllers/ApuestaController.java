@@ -1,5 +1,6 @@
 package com.ejercicio.loteria.Controllers;
 
+import com.ejercicio.loteria.dtos.ApuestaDTO;
 import com.ejercicio.loteria.entities.Apuesta;
 import com.ejercicio.loteria.Services.ApuestaService;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,8 @@ public class ApuestaController {
         this.apuestaService = apuestaService;
     }
 
-    @PostMapping
-    public ResponseEntity<Apuesta> crearApuesta(@RequestBody Apuesta apuesta) {
-        return ResponseEntity.ok(apuestaService.createApuesta(apuesta));
+    @PostMapping("/{userId}")
+    public ResponseEntity<Apuesta> crearApuesta(@RequestBody ApuestaDTO apuesta, @PathVariable Integer userId) {
+        return ResponseEntity.ok(apuestaService.createApuesta(apuesta, userId));
     }
 }

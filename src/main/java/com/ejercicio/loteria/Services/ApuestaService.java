@@ -10,7 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 import java.util.List;
 
@@ -20,6 +23,8 @@ public class ApuestaService {
     private final ApuestaRepository apuestaRepository;
 
     private final JugadorRepository jugadorRepository;
+
+    Random random = new Random();
 
     public ApuestaService(ApuestaRepository apuestaRepository, JugadorRepository jugadorRepository) {
         this.apuestaRepository = apuestaRepository;
@@ -47,6 +52,24 @@ public class ApuestaService {
 
     public List<Apuesta> getApuestas() {
         return apuestaRepository.findAll();
+    }
+
+    public Apuesta createApuestaRandom(Integer jugadorId) {
+        Set<Integer> numeros = new HashSet<>();
+        Random random = new Random();
+        Jugador jugador = jugadorRepository.findById(jugadorId).orElseThrow();
+
+        while (numeros.size() < 6) {
+            numeros.add(random.nextInt(49) + 1); // Genera un número entre 1 y 49
+        }
+
+        Integer[] numerosArray = numeros.toArray(new Integer[0]);
+
+        return new Apuesta(
+                numerosArray[0], numerosArray[1], numerosArray[2],
+                numerosArray[3], numerosArray[4], numerosArray[5],
+                jugador
+        );
     }
 
     private void validarNumerosApuesta(ApuestaDTO apuestadto) {

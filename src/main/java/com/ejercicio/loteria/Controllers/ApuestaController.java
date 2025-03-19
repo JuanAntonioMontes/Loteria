@@ -1,6 +1,7 @@
 package com.ejercicio.loteria.Controllers;
 
 import com.ejercicio.loteria.Services.JugadorService;
+import com.ejercicio.loteria.dtos.ApuestaDTO;
 import com.ejercicio.loteria.entities.Apuesta;
 import com.ejercicio.loteria.Services.ApuestaService;
 import com.ejercicio.loteria.entities.Jugador;
@@ -25,8 +26,8 @@ public class ApuestaController {
     }
 
     @PostMapping("/crear")
-    public String crearApuesta(@ModelAttribute("apuesta") Apuesta apuesta) {
-        apuestaService.createApuesta(apuesta);
+    public String crearApuesta(@ModelAttribute("apuesta") ApuestaDTO apuesta, @ModelAttribute("jugador") Jugador jugador) {
+        apuestaService.createApuesta(apuesta, jugador.getId());
         return "index";
     }
 
@@ -41,5 +42,10 @@ public class ApuestaController {
         model.addAttribute("apuestas", apuestas);
         model.addAttribute("jugadores", jugadores);
         return "index";
+    }
+
+    @PostMapping("/{userId}")
+    public ResponseEntity<Apuesta> crearApuesta(@RequestBody ApuestaDTO apuesta, @PathVariable Integer userId) {
+        return ResponseEntity.ok(apuestaService.createApuesta(apuesta, userId));
     }
 }

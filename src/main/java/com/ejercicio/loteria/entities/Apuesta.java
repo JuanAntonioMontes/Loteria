@@ -97,4 +97,12 @@ public class Apuesta{
     public void setNumero3(Integer numero3) {
         this.numero3 = numero3;
     }
+
+    public Jugador getJugador() {
+        return jugador;
+    }
+
+    public void setJugador(Jugador jugador) {
+        this.jugador = jugador;
+    }
 }

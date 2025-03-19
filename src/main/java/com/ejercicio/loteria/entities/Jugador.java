@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Jugador {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Genera el ID automáticamente
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(unique = true, nullable = false)

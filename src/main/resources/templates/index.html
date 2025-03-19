@@ -16,7 +16,7 @@
 </form>
 
 <h2>Crear apuesta Ramdom</h2>
-<form th:action="@{/api/apuestas/random}" method="post" th:object="${apuesta}">
+<form th:action="@{/api/apuestas/random}" method="post" th:object="${apuestaR}">
     <label for="jugador">Jugador:</label>
     <select th:field="*{jugador}" id="jugador">
         <option th:each="jugador : ${jugadores}"

@@ -50,6 +50,7 @@ public class JugadorController {
         List<Jugador> jugadores = jugadorService.getAllJugadores();
         model.addAttribute("jugador", new Jugador());
         model.addAttribute("apuesta", new Apuesta());
+        model.addAttribute("apuestaR", new Apuesta());
         model.addAttribute("apuestas", apuestas);
         model.addAttribute("jugadores", jugadores);
         return "index";
